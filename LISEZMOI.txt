@@ -1,0 +1,6 @@
+HOURI PHONE - site
+
+1) Netlify : allez sur app.netlify.com/drop et glissez TOUT ce dossier (ou le zip). Le site est en ligne.
+2) Commandes par e-mail : suivez les etapes au debut de Code.gs, puis collez l'adresse /exec dans index.html,
+   ligne : var ORDER_URL = "";   (entre les guillemets), et mettez le site a jour sur Netlify.
+3) Modifier un prix : dans index.html, cherchez le produit dans PRODUCTS et changez le nombre apres "price".

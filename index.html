@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Houri Phone : téléphones, chargeurs, câbles, power banks et écouteurs. Livraison 4D.">
+<link rel="icon" href="images/logo.jpg">
+<title>Houri Phone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;1,800;1,900&family=Manrope:wght@400;600;700&display=swap">
+<style>
+:root{color-scheme:light}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+/* Layout: centered logo masthead, "Livraison 4D" note top-left, category rail, product grid, slide-in cart. Single committed look matching the logo (black / red / off-white). */
+:root{
+  --page:#111111; --deep:#6e0f2b; --gold:#e7c27d; --cream:#f3e7d1; --bg:#fbfbfb; --ink:#111111; --muted:#6a6a6a; --red:#d93a3a; --red-dark:#b82e2e; --line:#e4e4e4; --card:#ffffff;
+  --display:"Archivo","Arial Black",Impact,sans-serif; --body:"Manrope","Segoe UI",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:#fff;font-family:var(--body);font-size:15px;line-height:1.5;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 100px}
+.wrap{max-width:1080px;margin:0 auto}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.note{display:inline-flex;align-items:center;margin-top:12px;font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--deep);color:#fff;border:1px solid rgba(255,255,255,.28);padding:4px 12px;border-radius:999px}
+.note b{color:#fff;font-family:var(--display);font-style:italic;font-weight:800}
+header.mast{display:flex;flex-direction:column;align-items:center;padding-bottom:6px}
+.brand{display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,24px);padding:10px 0 22px;width:100%}
+.brand img{width:clamp(84px,22vw,128px);height:auto;aspect-ratio:1/1;border-radius:50%;border:4px solid var(--red);background:#fff;display:block;flex:none}
+.brand .nm{font-family:var(--display);font-style:italic;font-weight:900;line-height:.92;font-size:clamp(34px,9vw,64px);text-transform:uppercase;color:#fff;letter-spacing:-.01em;margin:0}
+.brand .nm span{display:block;color:var(--red)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--deep);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px));}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--page)}
+.bar .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;padding-block:10px}
+.cats{display:flex;gap:8px;align-items:center;min-width:0;padding-block:2px}
+.cats::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;border:2px solid var(--ink);background:#fff;color:var(--ink);padding:7px 16px;border-radius:999px;font-weight:700;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff}
+.dd{position:relative}
+.ddb .car{display:inline-block;margin-left:7px;font-size:11px;transition:transform .15s}
+.ddb[aria-expanded="true"] .car{transform:rotate(180deg)}
+.ddm{position:absolute;top:calc(100% + 8px);left:0;z-index:6;margin:0;padding:6px;list-style:none;min-width:230px;max-width:calc(100vw - 32px);background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,.45)}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;border:0;background:none;color:var(--ink);text-align:left;padding:10px 12px;border-radius:8px;font-weight:600;font-size:15px}
+.opt small{color:var(--muted);font-weight:700}
+.opt:hover,.opt:focus-visible{background:#f4e6ea}
+.opt[aria-selected="true"]{background:var(--ink);color:#fff}
+.opt[aria-selected="true"] small{color:#ddd}
+.cartbtn{position:fixed;z-index:15;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:62px;height:62px;border-radius:50%;border:3px solid #fff;background:var(--deep);color:#fff;display:grid;place-items:center;padding:0;box-shadow:0 6px 18px rgba(0,0,0,.55)}
+.cartbtn:hover{background:#8a1a3c}
+.cartbtn .n{position:absolute;top:-8px;right:-8px;background:#fff;color:var(--ink);border:2px solid var(--deep);border-radius:999px;min-width:24px;height:24px;display:grid;place-items:center;font-size:12px;font-weight:800;padding-inline:5px}
+h2.title{font-family:var(--display);font-style:italic;font-weight:900;font-size:clamp(26px,5vw,40px);line-height:1.05;margin:30px 0 4px;text-wrap:balance}
+h2.title span{color:var(--red)}
+.sub{color:rgba(255,255,255,.9);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+.card{color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.card .ph{aspect-ratio:4/5;background:#f0f0f0;display:grid;place-items:center;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.card .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{margin:0;font-size:15px;font-weight:700;overflow-wrap:anywhere}
+.price{font-family:var(--display);font-style:italic;font-weight:800;font-size:19px;color:var(--red)}
+.price.soon{color:var(--muted);font-size:14px;font-style:normal;font-weight:600;font-family:var(--body)}
+.row{display:flex;gap:8px;margin-top:auto}
+.btn{flex:1;border-radius:6px;padding:9px 10px;font-weight:700;font-size:14px;border:2px solid var(--ink);background:transparent;color:var(--ink)}
+.btn.main{background:var(--ink);color:#fff}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn.md{padding:10px 18px;font-size:14px;line-height:1.2;flex:none}
+.brow{display:flex;gap:10px;justify-content:center}
+input.bad{border-color:var(--red);background:#fff1f1}
+.btn:hover{filter:brightness(1.15)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.empty{color:var(--ink);border:2px dashed var(--ink);border-radius:12px;padding:44px 20px;text-align:center;background:var(--card)}
+.empty h3{font-family:var(--display);font-style:italic;font-weight:900;font-size:24px;margin:0 0 6px}
+.empty p{margin:0;color:var(--muted)}
+.info{color:var(--ink);margin-top:36px;padding:16px 18px;border-left:6px solid var(--red);background:var(--card);border-radius:0 8px 8px 0;font-weight:600}
+.card .ph{position:relative}
+.nv{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(0,0,0,.72);color:#fff;font-size:18px;line-height:1;z-index:1}
+.nv.pv{left:6px}.nv.nx{right:6px}
+.lab{position:absolute;left:8px;top:8px;background:var(--ink);color:#fff;font-weight:700;font-size:12px;padding:3px 10px;border-radius:999px}
+.dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.dots i{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.35);border:1px solid #fff}
+.dots i.on{background:var(--red)}
+.pv{padding-block:18px 8px;color:var(--cream)}
+.pvback{background:none;border:0;color:var(--gold);font-weight:800;font-size:15px;padding:6px 0;margin-bottom:12px}
+.pvback:hover{text-decoration:underline}
+.pvgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(14px,4vw,40px);align-items:start}
+.pvpic{position:relative;aspect-ratio:4/5;max-width:100%;background:#f0f0f0;border-radius:12px;overflow:hidden;border:2px solid var(--deep)}
+.pvpic img{width:100%;height:100%;object-fit:cover;display:block}
+.pvinfo{min-width:0}
+.pvcat{margin:0 0 6px;color:var(--gold);font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.pvname{font-family:var(--display);font-style:italic;font-weight:900;font-size:clamp(21px,5.2vw,44px);line-height:1.06;color:var(--gold);margin:0 0 10px;text-wrap:balance;overflow-wrap:anywhere}
+.pvprice{font-family:var(--display);font-style:italic;font-weight:900;font-size:clamp(24px,5vw,38px);color:var(--gold);margin:0 0 14px}
+.pvdesc{font-weight:700;font-size:clamp(14px,2.6vw,18px);line-height:1.6;color:var(--cream);margin:0 0 16px;overflow-wrap:anywhere}
+.pvmeta{margin:0 0 18px;padding:14px 0 0;list-style:none;display:grid;gap:8px;border-top:1px solid rgba(231,194,125,.35)}
+.pvmeta li{display:flex;gap:10px;flex-wrap:wrap;font-weight:700;font-size:14px;color:var(--cream)}
+.pvmeta span{color:var(--gold);min-width:84px}
+.pvadd{width:100%;max-width:320px}
+@media (max-width:359px){.pvgrid{grid-template-columns:minmax(0,1fr)}}
+.avail{font-size:12.5px;font-weight:700;color:#6e0f2b;margin:4px 0 2px}
+/* overlays */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20}
+.panel{position:fixed;z-index:21;background:var(--bg);color:var(--ink)}
+.drawer{top:0;bottom:0;right:0;width:min(420px,100%);display:flex;flex-direction:column;border-left:3px solid var(--ink);padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) 16px}
+.drawer h2,.modal h2{font-family:var(--display);font-style:italic;font-weight:900;margin:0;font-size:26px}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.x{background:none;border:2px solid var(--ink);border-radius:6px;width:36px;height:36px;font-size:18px;line-height:1;color:var(--ink)}
+.lines{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;min-height:0}
+.line{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px}
+.line img,.line .t{width:56px;height:56px;border-radius:6px;object-fit:cover;background:#eee}
+.line small{color:var(--muted);display:block}
+.qty{display:flex;align-items:center;gap:6px;margin-top:4px}
+.qty button{width:26px;height:26px;border:2px solid var(--ink);background:none;border-radius:5px;font-weight:800;color:var(--ink);line-height:1}
+.rm{background:none;border:0;color:var(--red);font-weight:700;font-size:13px;padding:4px}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:18px;padding:12px 0;border-top:2px solid var(--ink);margin-top:10px}
+.sums{border-top:2px solid var(--ink);margin-top:10px;padding-top:10px;display:grid;gap:4px;font-weight:600;font-size:15px}
+.sums div{display:flex;justify-content:space-between}
+.sums + .total{border-top:0;margin-top:0;padding-top:6px}
+.modal{left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,calc(100% - 32px));max-height:calc(100% - 32px);overflow-y:auto;border:3px solid var(--ink);border-radius:12px;padding:18px}
+.show{aspect-ratio:4/5;background:#eee;border-radius:8px;overflow:hidden;position:relative;display:grid;place-items:center;max-width:100%}
+.show img{width:100%;height:100%;object-fit:cover}
+.show button{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.7);color:#fff;font-size:18px}
+.show .p{left:8px}.show .nx{right:8px}
+label{display:block;font-weight:700;font-size:13px;margin:12px 0 4px}
+input{width:100%;font:inherit;padding:11px 12px;border:2px solid var(--ink);border-radius:6px;background:#fff;color:var(--ink)}
+.err{color:var(--red);font-weight:600;font-size:13px;margin:6px 0 0;min-height:18px}
+.colors{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.colors button{border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:7px 14px;font-weight:700}
+.colors button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+pre.sum{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;font-family:var(--body);font-size:14px;overflow-wrap:anywhere}
+.toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--red);color:#fff;padding:10px 18px;border-radius:6px;font-weight:700;z-index:30}
+@media (prefers-reduced-motion:no-preference){.drawer{animation:in .2s ease-out}@keyframes in{from{transform:translateX(30px);opacity:0}}}
+@media (max-width:420px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card .bd{padding:10px}.row{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <div style="align-self:flex-start"><div class="note"><b>Livraison 4D</b></div></div>
+    <div class="brand"><img src="images/logo.jpg" alt="Logo Houri Phone" width="128" height="128"><h1 class="nm">Houri<span>Phone</span></h1></div>
+  </header>
+</div>
+
+<div class="bar"><div class="wrap">
+  <nav class="cats" id="cats" aria-label="Catégories"></nav>
+  
+</div></div>
+
+<main class="wrap">
+  <section class="pv" id="pv" hidden></section>
+  <div id="list">
+  <h2 class="title" id="ttl">Tous les <span>produits</span></h2>
+  <p class="sub" id="sub"></p>
+  <section class="grid" id="grid" aria-live="polite"></section>
+  </div>
+  <div class="info">Contactez Houri Phone.</div>
+</main>
+
+<button class="cartbtn" id="openCart" aria-label="Ouvrir le panier"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21.5 8H6"/><path d="M10 8v4M14 8v4M18 8v4"/></svg><span class="n" id="count">0</span></button>
+<div id="layer"></div>
+
+<script>
+// Add products here. image: data URI or published file path. colors: list only for items sold in several colours.
+// price: number in DT, or null to show "Prix bientôt". images: several entries make a slideshow.
+var CATEGORIES = ["Téléphones","Chargeurs","Câbles","Power bank","Accessoires","Écouteurs","Caches"];
+// Pour changer un prix : modifiez le nombre après "price". Pour ajouter un produit : copiez une ligne.
+var PRODUCTS = [
+  {"id": "infinix", "name": "Infinix Smart 20e", "cat": "Téléphones", "price": 530, "images": ["images/infinix.jpg"], "colors": [], "desc": "Infinix Smart 20e, 64 Go, 8 Go de RAM (4 Go + 4 Go étendue). Écran 120 Hz, 700 nits, résistant à la poussière et aux éclaboussures IP64."},
+  {"id": "x8d", "name": "Honor X8d", "cat": "Téléphones", "price": 950, "images": ["images/x8d.jpg"], "colors": [], "desc": "Honor X8d avec bouton AI+."},
+  {"id": "a07", "name": "Samsung Galaxy A07", "cat": "Téléphones", "price": 570, "images": ["images/a07.jpg"], "colors": [], "desc": "Samsung Galaxy A07, produit garanti par Samsung."},
+  {"id": "x7e", "name": "Honor X7e", "cat": "Téléphones", "price": 840, "images": ["images/x7e.jpg"], "colors": [], "desc": "Honor X7e avec bouton AI+."},
+  {"id": "h600", "name": "Honor 600 Lite 5G", "cat": "Téléphones", "price": 1300, "images": ["images/h600.jpg"], "colors": [], "desc": "Honor 600 Lite, compatible 5G."},
+  {"id": "apple20", "name": "Adaptateur secteur USB-C 20W Apple", "cat": "Chargeurs", "price": 75, "images": ["images/apple20.jpg"], "colors": [], "desc": "Adaptateur secteur USB-C 20W."},
+  {"id": "beclad", "name": "Chargeur Beclad 45W", "cat": "Chargeurs", "price": 75, "images": ["images/beclad.jpg"], "colors": [], "desc": "Chargeur secteur Beclad 45W."},
+  {"id": "bel20", "name": "Belkin BoostCharge USB-C 20W", "cat": "Chargeurs", "price": 100, "images": ["images/bel20.jpg"], "colors": [], "desc": "Chargeur mural compact USB-C 20W. Charge de 0 à 50 % en 27 minutes, compatible PD et PPS."},
+  {"id": "bel30", "name": "Belkin BoostCharge USB-C 30W + câble Lightning", "cat": "Chargeurs", "price": 150, "images": ["images/bel30.jpg"], "colors": [], "desc": "Chargeur mural compact USB-C 30W avec câble USB-C vers Lightning. Charge de 0 à 50 % en 25 minutes."},
+  {"id": "apple60", "name": "Câble USB-C 60W Apple (1 m)", "cat": "Câbles", "price": 45, "images": ["images/apple60.jpg"], "colors": [], "desc": "Câble de charge USB-C vers USB-C, 60W, 1 m."},
+  {"id": "applelight", "name": "Câble USB-C vers Lightning Apple (1 m)", "cat": "Câbles", "price": 35, "images": ["images/applelight.jpg"], "colors": [], "desc": "Câble USB-C vers Lightning, 1 m."},
+  {"id": "nezo", "name": "Câble Nezo N-C121 USB vers Lightning", "cat": "Câbles", "price": 20, "images": ["images/nezo.jpg"], "colors": [], "desc": "Câble en silicone, 10A, charge super rapide, 1 m."},
+  {"id": "samsung", "name": "Câble Samsung USB-C vers USB-C (1,8 m)", "cat": "Câbles", "price": 55, "images": ["images/samsung.jpg"], "colors": [], "desc": "Câble USB-C vers USB-C, 1,8 m, S23."},
+  {"id": "bel10k", "name": "Belkin BoostCharge Power Bank 10K", "cat": "Power bank", "price": 75, "images": ["images/bel10k.jpg"], "colors": [], "desc": "Batterie externe 10K, 15W, 1 sortie USB-C et 2 USB-A. Deux recharges de téléphone, déjà chargée."},
+  {"id": "bel20k", "name": "Belkin BoostCharge Pro Power Bank 20K", "cat": "Power bank", "price": 150, "images": ["images/bel20k-1.jpg", "images/bel20k-2.jpg"], "colors": ["Bleu", "Rose"], "desc": "Batterie externe 20K, 15W, 1 sortie USB-C et 2 USB-A. Environ 3,5 recharges de téléphone.", "colorImgs": {"Bleu": 0, "Rose": 1}},
+  {"id": "inkax", "name": "Inkax PB-28 Power Bank 20000 mAh", "cat": "Power bank", "price": 75, "images": ["images/inkax-1.jpg", "images/inkax-2.jpg"], "colors": ["Noir", "Gris"], "desc": "Batterie externe 20000 mAh, charge rapide 2A, 2 sorties USB, affichage LED. Disponible en noir et gris.", "colorImgs": {"Noir": 0, "Gris": 1}},
+  {"id": "dekkin", "name": "Microphone cravate Dekkin DK-MK1", "cat": "Accessoires", "price": 30, "images": ["images/dekkin.jpg"], "colors": [], "desc": "Microphone à clip pour enregistrement audio et vidéo, design compact."},
+  {"id": "airpods", "name": "AirPods Pro", "cat": "Écouteurs", "price": 45, "images": ["images/airpods.jpg"], "colors": [], "desc": "Écouteurs sans fil AirPods Pro."},
+  {"id": "airpods2", "name": "AirPods Pro (autocollant Tunisie)", "cat": "Écouteurs", "price": 65, "images": ["images/airpods2.jpg"], "colors": [], "desc": "Écouteurs sans fil AirPods Pro, boîte avec autocollant Tunisie."},
+  {"id": "a7pro", "name": "Redmi A7 Pro", "cat": "Téléphones", "price": 580, "images": ["images/a7pro.jpg"], "colors": [], "desc": "Écran 6,9 pouces, batterie 6000 mAh, jusqu'à 8 Go de RAM (4 Go + 4 Go d'extension), 128 Go de stockage, NFC."},
+  {"id": "smart20", "name": "Infinix Smart 20", "cat": "Téléphones", "price": 530, "images": ["images/smart20.jpg"], "colors": [], "desc": "Infinix Smart 20, 64 Go, 8 Go de RAM. NFC, batterie 5200 mAh, ultra-fin 77 mm."},
+  {"id": "a17", "name": "Samsung Galaxy A17", "cat": "Téléphones", "price": 880, "images": ["images/a17.jpg"], "colors": [], "desc": "Samsung Galaxy A17."},
+  {"id": "a37", "name": "Samsung Galaxy A37 5G", "cat": "Téléphones", "price": 1250, "images": ["images/a37.jpg"], "colors": [], "desc": "Samsung Galaxy A37 5G."},
+  {"id": "sam45", "name": "Samsung 45W + câble USB-C (1,8 m) blanc", "cat": "Chargeurs", "price": 65, "images": ["images/sam45.jpg"], "colors": [], "desc": "Adaptateur secteur Samsung 45W blanc avec câble USB-C 5A de 1,8 m, faible consommation en veille."},
+  {"id": "sam45b", "name": "Samsung 45W + câble USB-C (1,8 m) noir (Original)", "cat": "Chargeurs", "price": 150, "images": ["images/sam45b.jpg"], "colors": [], "desc": "Adaptateur secteur Samsung 45W noir avec câble USB-C 5A de 1,8 m, faible consommation en veille. Produit original."},
+  {"id": "sam25", "name": "Adaptateur secteur Samsung 25W", "cat": "Chargeurs", "price": 45, "images": ["images/sam25.jpg"], "colors": [], "desc": "Adaptateur secteur Samsung 25W, charge super rapide."},
+  {"id": "nh114", "name": "Chargeur Nezo NH-114 35W", "cat": "Chargeurs", "price": 65, "images": ["images/nh114.jpg"], "colors": [], "desc": "Chargeur super rapide PD 35W avec câble USB-C vers USB-C, garantie 12 mois."},
+  {"id": "anker20", "name": "Anker Select USB-C 20W", "cat": "Chargeurs", "price": 75, "images": ["images/anker20.jpg"], "colors": [], "desc": "Chargeur USB-C haute vitesse 20W, trois fois plus rapide, protection avancée. Pour Apple, Samsung et plus."},
+  {"id": "ankerdisp", "name": "Anker Nano 45W avec écran", "cat": "Chargeurs", "price": 150, "images": ["images/ankerdisp.jpg"], "colors": [], "desc": "Anker Nano 45W, 1 port USB-C, écran d'affichage, prise pliable. Compatible Apple et Android."},
+  {"id": "ankerpro", "name": "Anker Nano Pro 45W", "cat": "Chargeurs", "price": 85, "images": ["images/ankerpro.jpg"], "colors": [], "desc": "Anker Nano 45W, 1 port USB-C, prise pliable, design ultra compact. Pour Apple, Samsung et plus."},
+  {"id": "belcable", "name": "Belkin BoostCharge USB-C vers Lightning (1 m)", "cat": "Câbles", "price": 85, "images": ["images/belcable.jpg"], "colors": [], "desc": "Câble USB-C avec connecteur Lightning, 1 m. Charge de 0 à 50 % en 25 minutes, 25 fois plus durable."},
+  {"id": "nezoc104l", "name": "Câble Nezo N-C104 Type-C vers Lightning", "cat": "Câbles", "price": 30, "images": ["images/nezoc104l.jpg"], "colors": [], "desc": "Câble de données en silicone, charge super rapide."},
+  {"id": "nezoc104u", "name": "Câble Nezo N-C104 USB vers Type-C 100W", "cat": "Câbles", "price": 18, "images": ["images/nezoc104u.jpg"], "colors": [], "desc": "Câble de données en silicone, 100W, 1 m, charge super rapide."},
+  {"id": "hoco", "name": "Hoco J72A Power Bank 20000 mAh", "cat": "Power bank", "price": 120, "images": ["images/hoco.jpg"], "colors": [], "desc": "Batterie externe 20000 mAh, double sortie USB, entrée Micro USB et Type-C, indicateur LED."},
+  {"id": "qiop", "name": "Casque QIOP Twister", "cat": "Écouteurs", "price": 145, "images": ["images/qiop.jpg"], "colors": [], "desc": "Casque QIOP Twister avec haut-parleur twist out."},
+  {"id": "soundcore", "name": "Soundcore R50i NC", "cat": "Écouteurs", "price": 120, "images": ["images/soundcore.jpg"], "colors": [], "desc": "Écouteurs sans fil par Anker, réduction de bruit adaptative, 4 micros IA, boîtier de charge avec support téléphone, autonomie 10 h / 45 h, IP54."},
+  {"id": "haylou", "name": "Casque Haylou S35 ANC", "cat": "Écouteurs", "price": 230, "images": ["images/haylou.jpg"], "colors": [], "desc": "Casque sans fil blanc cassé, réduction de bruit hybride, audio Hi-Res."},
+  {"id": "likenuo", "name": "Écouteurs Likenuo LW-06", "cat": "Écouteurs", "price": 75, "images": ["images/likenuo.jpg"], "colors": [], "desc": "Écouteurs sans fil Bluetooth TWS 5.3 avec boîtier de charge."},
+  {"id": "watch", "name": "Redmi Watch 5 Active", "cat": "Accessoires", "price": 130, "images": ["images/watch.jpg"], "colors": [], "desc": "Montre connectée Redmi Watch 5 Active."},
+  {"id": "inkax60", "name": "Inkax PBQ-45 Power Bank 60000 mAh", "cat": "Power bank", "price": 229, "images": ["images/inkax60.jpg"], "colors": [], "desc": "Batterie externe grande capacité 60000 mAh, 4 sorties et 2 entrées, charge rapide 22,5W et PD 20W, écran LED, lampe puissante pour le camping, 2 câbles intégrés."},
+  {"id": "inkax50", "name": "Inkax PBQ-70 Power Bank 50000 mAh", "cat": "Power bank", "price": 149, "images": ["images/inkax50.jpg"], "colors": [], "desc": "Batterie externe 50000 mAh avec 4 câbles intégrés (Type-C, Micro USB, USB-A, iPhone), sortie 22,5W, PD 20W, affichage LED, éclairage puissant."},
+  {"id": "likenuo2", "name": "Écouteurs Likenuo LW-06 (écran LED)", "cat": "Écouteurs", "price": 89, "images": ["images/likenuo2.jpg"], "colors": [], "desc": "Écouteurs sans fil Bluetooth 6.0, son HiFi, boîtier de charge avec écran LED, support de traduction IA."},
+  {"id": "cv1", "name": "Coque rigide rainurée pour iPhone", "cat": "Caches", "price": 70, "images": ["images/cv1-1.jpg", "images/cv1-2.jpg", "images/cv1-3.jpg", "images/cv1-4.jpg"], "colors": ["Sable", "Blanc", "Gris", "Noir"], "desc": "Coque rigide à rainures verticales avec protection de l'appareil photo. Disponible pour tous les modèles et toutes les couleurs.", "colorImgs": {"Sable": 0, "Blanc": 1, "Gris": 2, "Noir": 3}},
+  {"id": "cv2", "name": "Coque MagGrip MagSafe avec support", "cat": "Caches", "price": 45, "images": ["images/cv2.jpg"], "colors": [], "desc": "Coque magnétique compatible MagSafe avec support intégré et prise en main confortable, protection complète. Disponible pour tous les modèles et toutes les couleurs."},
+  {"id": "cv3", "name": "Coque silicone MagSafe noire", "cat": "Caches", "price": 35, "images": ["images/cv3.jpg"], "colors": [], "desc": "Coque en silicone noire compatible MagSafe, finition douce. Disponible pour tous les modèles et toutes les couleurs."},
+  {"id": "cv4", "name": "Coque tissée MagSafe marron", "cat": "Caches", "price": 45, "images": ["images/cv4.jpg"], "colors": [], "desc": "Coque à texture tissée compatible MagSafe, bords surélevés autour de l'appareil photo. Disponible pour tous les modèles et toutes les couleurs."},
+  {"id": "cv5", "name": "Coque antichoc colorée", "cat": "Caches", "price": 25, "images": ["images/cv5.jpg"], "colors": [], "desc": "Coque antichoc en plusieurs couleurs : noir, blanc, bleu, brique, jaune, orange, rose, bordeaux et vert. Disponible pour tous les modèles et toutes les couleurs."},
+  {"id": "belc100", "name": "Belkin BoostCharge USB-C vers USB-C 100W (3 m)", "cat": "Câbles", "price": 150, "images": ["images/belc100.jpg"], "colors": [], "desc": "Câble USB-C vers USB-C 100W en matériau tressé durable, 3 m. Compatible charge rapide, pour ordinateurs portables, tablettes et smartphones."},
+  {"id": "gt50", "name": "Infinix GT 50 Pro Cooling Edition", "cat": "Téléphones", "price": null, "images": ["images/gt50.jpg"], "colors": [], "desc": "Infinix GT 50 Pro Cooling Edition, 256 Go, 24 Go de RAM (extensible), Real Cooling, Magcharge Cooler et MagCase."},
+  {"id": "bolt", "name": "Belkin SoundForm Bolt", "cat": "Écouteurs", "price": 110, "images": ["images/bolt.jpg"], "colors": [], "desc": "Écouteurs sans fil Belkin SoundForm Bolt, blancs, autonomie 9 h + 19 h avec le boîtier, son clair et net."},
+  {"id": "kaku", "name": "Chargeur Kakusiga 5A (micro)", "cat": "Chargeurs", "price": null, "images": ["images/kaku.jpg"], "colors": [], "desc": "Chargeur secteur Kakusiga 5A, 1 port USB, protections multiples, matériau ignifuge, pour micro USB, garantie 365 jours."},
+  {"id": "inkaxhc", "name": "Chargeur Inkax HC-02 2,4A (micro)", "cat": "Chargeurs", "price": null, "images": ["images/inkaxhc.jpg"], "colors": [], "desc": "Chargeur de voyage intelligent Inkax HC-02, 2 ports USB, 2,4A, protection contre la surcharge, avec câble micro USB."},
+  {"id": "bel20c", "name": "Belkin BoostCharge USB-C 20W + câble USB-C vers USB-C", "cat": "Chargeurs", "price": null, "images": ["images/bel20c.jpg"], "colors": [], "desc": "Chargeur mural USB-C 20W avec câble USB-C vers USB-C. Charge de 0 à 50 % en 26 minutes, Power Delivery, emballage sans plastique."},
+  {"id": "bel30c", "name": "Belkin BoostCharge Compact USB-C 30W", "cat": "Chargeurs", "price": 115, "images": ["images/bel30c.jpg"], "colors": [], "desc": "Chargeur mural compact USB-C 30W, design compact, Power Delivery sécurisé. Charge de 0 à 50 % en 25 minutes. Fabriqué à partir de plastique recyclé."}
+];
+
+// ADRESSE DU SCRIPT GOOGLE : collez ici l'URL de déploiement Apps Script (elle se termine par /exec).
+// Laissez vide pour afficher seulement le récapitulatif à l'écran.
+// PRIX DE LA LIVRAISON (en DT), ajouté au total du panier. Mettez 0 pour une livraison gratuite.
+var DELIVERY_FEE = 4;
+var ORDER_URL = "";
+function thumb(src){return new Promise(function(res){
+  if(!src){res("");return}
+  var im=new Image();
+  im.onload=function(){var w=220,h=Math.round(im.height*w/im.width),c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(im,0,0,w,h);try{res(c.toDataURL("image/jpeg",0.7))}catch(e){res("")}};
+  im.onerror=function(){res("")};
+  im.src=src})}
+function sendOrder(o){
+  return Promise.all(o.items.map(function(it){return thumb(it.img).then(function(t){it.img=t;return it})})).then(function(){
+    return fetch(ORDER_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(o)})})}
+var state = { cat:"Tous", cart:[], open:false };
+var $ = function(id){return document.getElementById(id)};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function money(n){return (Math.round(n*100)/100).toString().replace(".",",")+" DT"}
+function toast(t){var d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},1800)}
+
+function countIn(c){return PRODUCTS.filter(function(p){return p.cat===c}).length}
+function renderCats(){
+  var all=state.cat==="Tous";
+  var menu="";
+  if(state.open){
+    menu='<ul class="ddm" role="listbox" aria-label="Catégories">'+CATEGORIES.map(function(c){
+      return '<li><button class="opt" role="option" data-c="'+esc(c)+'" aria-selected="'+(c===state.cat)+'">'+esc(c)+'<small>'+countIn(c)+'</small></button></li>'}).join("")+'</ul>';
+  }
+  $("cats").innerHTML='<button class="chip" data-c="Tous" aria-pressed="'+all+'">Tous</button>'+
+    '<div class="dd"><button class="chip ddb" id="ddb" aria-haspopup="listbox" aria-expanded="'+state.open+'" aria-pressed="'+(!all)+'">'+(all?"Catégories":esc(state.cat))+'<span class="car" aria-hidden="true">▾</span></button>'+menu+'</div>';
+}
+function ctrl(p){
+  var n=(p.images||[]).length;if(n<2)return"";
+  return '<button class="nv pv" data-s="-1" aria-label="Photo précédente">‹</button><button class="nv nx" data-s="1" aria-label="Photo suivante">›</button>'+
+    (p.colors&&p.colors[0]?'<span class="lab">'+esc(p.colors[0])+'</span>':'')+
+    '<span class="dots">'+p.images.map(function(_,k){return '<i class="'+(k?'':'on')+'"></i>'}).join("")+'</span>';
+}
+function renderGrid(){
+  var list=PRODUCTS.filter(function(p){return state.cat==="Tous"||p.cat===state.cat});
+  $("ttl").innerHTML=state.cat==="Tous"?'Tous les <span>produits</span>':esc(state.cat);
+  $("sub").textContent=list.length?list.length+(list.length>1?" articles":" article"):"";
+  if(!list.length){
+    $("grid").innerHTML='<div class="empty" style="grid-column:1/-1"><h3>Bientôt disponible</h3><p>Les produits '+(state.cat==="Tous"?"":"de cette catégorie ")+'arrivent très vite. Revenez nous voir.</p></div>';
+    return;
+  }
+  $("grid").innerHTML=list.map(function(p){
+    var img=p.images&&p.images[0]?'<img src="'+esc(p.images[0])+'" alt="'+esc(p.name)+'" loading="lazy">':'';
+    return '<article class="card"><div class="ph" data-pid="'+esc(p.id)+'" data-i="0">'+img+ctrl(p)+'</div><div class="bd"><h3>'+esc(p.name)+'</h3>'+
+      (p.cat==="Caches"?'<div class="avail">Disponible en toutes les couleurs et pour tous les modèles</div>':'')+(p.price==null?'<div class="price soon">Prix bientôt</div>':'<div class="price">'+money(p.price)+'</div>')+
+      '<div class="row"><button class="btn" data-d="'+esc(p.id)+'">Détails</button><button class="btn main" data-a="'+esc(p.id)+'"'+(p.price==null?' disabled':'')+'>Ajouter</button></div></div></article>';
+  }).join("");
+}
+function find(id){return PRODUCTS.filter(function(p){return p.id===id})[0]}
+function cartCount(){return state.cart.reduce(function(a,l){return a+l.qty},0)}
+function cartTotal(){return state.cart.reduce(function(a,l){return a+l.qty*l.price},0)}
+function grandTotal(){return state.cart.length?cartTotal()+DELIVERY_FEE:0}
+function feeText(){return DELIVERY_FEE>0?money(DELIVERY_FEE):"Gratuite"}
+function totalsHTML(){
+  if(!state.cart.length)return '<div class="total"><span>Total</span><span>'+money(0)+'</span></div>';
+  return '<div class="sums"><div><span>Sous-total</span><span>'+money(cartTotal())+'</span></div><div><span>Livraison</span><span>'+feeText()+'</span></div></div>'+
+    '<div class="total"><span>Total</span><span>'+money(grandTotal())+'</span></div>';
+}
+function updateCount(){$("count").textContent=cartCount()}
+
+function addToCart(p,color){
+  var key=p.id+"|"+(color||"");
+  var l=state.cart.filter(function(x){return x.key===key})[0];
+  if(l)l.qty++;else state.cart.push({key:key,id:p.id,name:p.name,price:p.price,color:color||"",img:(p.images&&p.images[(p.colorImgs&&p.colorImgs[color])||0])||"",qty:1});
+  updateCount();toast("Ajouté au panier");
+}
+function askAdd(p){
+  if(p.price==null)return;
+  if(p.colors&&p.colors.length)return colorModal(p);
+  addToCart(p,"");
+}
+function closeLayer(){$("layer").innerHTML=""}
+function open(html){$("layer").innerHTML='<div class="scrim" data-close="1"></div>'+html}
+
+function colorModal(p){
+  var chosen="";
+  open('<div class="panel modal" role="dialog" aria-label="Choisir la couleur"><div class="dh"><h2>Couleur</h2><button class="x" data-close="1" aria-label="Fermer">✕</button></div><p style="margin:0">'+esc(p.name)+'</p><div class="colors" id="cols">'+
+    p.colors.map(function(c){return '<button data-col="'+esc(c)+'" aria-pressed="false">'+esc(c)+'</button>'}).join("")+
+    '</div><div class="err" id="cerr"></div><button class="btn red" id="cok">Ajouter au panier</button></div>');
+  $("cols").onclick=function(e){var b=e.target.closest("button");if(!b)return;chosen=b.dataset.col;[].forEach.call($("cols").children,function(x){x.setAttribute("aria-pressed",x===b)});$("cerr").textContent=""};
+  $("cok").onclick=function(){if(!chosen){$("cerr").textContent="Choisissez une couleur.";return}addToCart(p,chosen);closeLayer()};
+}
+function detailModal(p){
+  var i=0,imgs=p.images||[];
+  open('<div class="panel modal" role="dialog" aria-label="Détails"><div class="dh"><h2>'+esc(p.name)+'</h2><button class="x" data-close="1" aria-label="Fermer">✕</button></div>'+
+    '<div class="show" id="show"></div>'+
+    '<p style="margin:12px 0 4px">'+esc(p.desc||"")+'</p>'+
+    (p.colors&&p.colors.length?'<p style="margin:4px 0;color:var(--muted)">Couleurs : '+p.colors.map(esc).join(", ")+'</p>':'')+
+    '<div class="price'+(p.price==null?' soon':'')+'" style="margin:8px 0 12px">'+(p.price==null?'Prix bientôt':money(p.price))+'</div>'+
+    '<button class="btn red" id="dadd" style="width:100%"'+(p.price==null?' disabled':'')+'>Ajouter</button></div>');
+  function paint(){
+    var h=imgs.length?'<img src="'+esc(imgs[i])+'" alt="'+esc(p.name)+'">':'';
+    if(imgs.length>1)h+='<button class="p" aria-label="Précédent">‹</button><button class="nx" aria-label="Suivant">›</button>';
+    $("show").innerHTML=h;
+    var a=$("show").querySelector(".p"),b=$("show").querySelector(".nx");
+    if(a)a.onclick=function(){i=(i-1+imgs.length)%imgs.length;paint()};
+    if(b)b.onclick=function(){i=(i+1)%imgs.length;paint()};
+  }
+  paint();
+  $("dadd").onclick=function(){if(p.colors&&p.colors.length){colorModal(p)}else{addToCart(p,"");closeLayer()}};
+}
+
+function cartView(){
+  var lines=state.cart.map(function(l,idx){
+    return '<div class="line">'+(l.img?'<img src="'+esc(l.img)+'" alt="">':'<div class="t"></div>')+
+      '<div><strong>'+esc(l.name)+'</strong>'+(l.color?'<small>Couleur : '+esc(l.color)+'</small>':'')+
+      '<div class="qty"><button data-m="'+idx+'" aria-label="Moins">−</button><span>'+l.qty+'</span><button data-pl="'+idx+'" aria-label="Plus">+</button></div></div>'+
+      '<div style="text-align:right"><div class="price" style="font-size:16px">'+money(l.price*l.qty)+'</div><button class="rm" data-rm="'+idx+'">Retirer</button></div></div>';
+  }).join("");
+  open('<aside class="panel drawer" role="dialog" aria-label="Panier"><div class="dh"><h2>Panier</h2><button class="x" data-close="1" aria-label="Fermer">✕</button></div>'+
+    '<div class="lines">'+(lines||'<div class="empty"><h3>Panier vide</h3><p>Ajoutez des produits pour commander.</p></div>')+'</div>'+
+    totalsHTML()+
+    '<button class="btn red md" style="align-self:center" id="goOrder"'+(state.cart.length?'':' disabled')+'>Confirmer la livraison</button></aside>');
+  var g=$("goOrder");if(g)g.onclick=orderForm;
+}
+function orderForm(){
+  open('<aside class="panel drawer" role="dialog" aria-label="Livraison"><div class="dh"><h2>Livraison</h2><button class="x" data-close="1" aria-label="Fermer">✕</button></div>'+
+    '<div style="overflow-y:auto;flex:1;min-height:0"><label for="ln">Nom *</label><input id="ln" autocomplete="family-name" required>'+
+    '<label for="fn">Prénom *</label><input id="fn" autocomplete="given-name" required>'+
+    '<label for="ph">Téléphone *</label><input id="ph" type="tel" inputmode="tel" autocomplete="tel" required>'+
+    '<label for="ad">Adresse *</label><input id="ad" autocomplete="street-address" required><div class="err" id="oerr"></div></div>'+
+    totalsHTML()+
+    '<div class="brow"><button class="btn md" id="back">Retour au panier</button><button class="btn red md" id="send">Valider la commande</button></div></aside>');
+  $("back").onclick=cartView;
+  $("send").onclick=function(){
+    var ln=$("ln").value.trim(),fn=$("fn").value.trim(),ph=$("ph").value.trim(),ad=$("ad").value.trim();
+    var ok={ln:!!ln,fn:!!fn,ph:ph.replace(/\D/g,"").length>=8,ad:!!ad};
+    ["ln","fn","ph","ad"].forEach(function(k){$(k).classList.toggle("bad",!ok[k])});
+    if(!(ok.ln&&ok.fn&&ok.ph&&ok.ad)){$("oerr").textContent="Tous les champs sont obligatoires : nom, prénom, téléphone (8 chiffres au moins) et adresse.";return}
+    var items=state.cart.map(function(l){return {name:l.name,color:l.color,qty:l.qty,price:l.price,img:l.img}});
+    var total=grandTotal();
+    var txt="Commande Houri Phone\nClient : "+fn+" "+ln+"\nTéléphone : "+ph+"\nAdresse : "+ad+"\n\n"+
+      state.cart.map(function(l){return "- "+l.name+(l.color?" ("+l.color+")":"")+" x"+l.qty+" = "+money(l.price*l.qty)}).join("\n")+"\n\nSous-total : "+money(cartTotal())+"\nLivraison : "+feeText()+"\nTotal : "+money(total);
+    function showSummary(title,note){
+      open('<aside class="panel drawer" role="dialog" aria-label="'+title+'"><div class="dh"><h2>'+title+'</h2><button class="x" data-close="1" aria-label="Fermer">✕</button></div>'+
+        (note?'<p style="margin:0 0 10px;font-weight:600">'+note+'</p>':'')+
+        '<div style="overflow-y:auto;flex:1;min-height:0"><pre class="sum" id="sum">'+esc(txt)+'</pre></div>'+
+        '<button class="btn red md" style="align-self:center" id="cp">Copier la commande</button></aside>');
+      $("cp").onclick=function(){
+        function fallback(){var r=document.createRange();r.selectNodeContents($("sum"));var s=getSelection();s.removeAllRanges();s.addRange(r);toast("Texte sélectionné, copiez-le")}
+        try{navigator.clipboard.writeText(txt).then(function(){toast("Commande copiée")},fallback)}catch(e){fallback()}
+      };
+    }
+    if(!ORDER_URL){showSummary("Récapitulatif","");return}
+    var sb=$("send");sb.disabled=true;sb.textContent="Envoi…";
+    sendOrder({customer:{nom:ln,prenom:fn,telephone:ph,adresse:ad},items:items,subtotal:cartTotal(),delivery:DELIVERY_FEE,total:total}).then(function(){
+      state.cart=[];updateCount();
+      showSummary("Commande envoyée","Merci ! Houri Phone vous contactera très bientôt pour confirmer la livraison.");
+    },function(){
+      sb.disabled=false;sb.textContent="Valider la commande";
+      showSummary("Envoi impossible","L'envoi a échoué. Copiez la commande puis contactez Houri Phone.");
+    });
+  };
+}
+
+function showProduct(p){
+  var col=p.colors||[],imgs=p.images||[];
+  $("list").hidden=true;$("pv").hidden=false;
+  $("pv").innerHTML='<button class="pvback" id="pvback">← Retour aux produits</button>'+
+    '<div class="pvgrid"><div class="ph pvpic" data-pid="'+esc(p.id)+'" data-i="0">'+(imgs[0]?'<img src="'+esc(imgs[0])+'" alt="'+esc(p.name)+'">':'')+ctrl(p)+'</div>'+
+    '<div class="pvinfo"><p class="pvcat">'+esc(p.cat)+'</p><h2 class="pvname">'+esc(p.name)+'</h2>'+
+    '<div class="pvprice">'+(p.price==null?"Prix bientôt":money(p.price))+'</div>'+
+    (p.cat==="Caches"?'<p class="avail" style="color:var(--gold);font-size:15px">✔ Disponible en toutes les couleurs et pour tous les modèles</p>':'')+'<p class="pvdesc">'+esc(p.desc||"")+'</p>'+
+    '<ul class="pvmeta"><li><span>Catégorie</span>'+esc(p.cat)+'</li>'+(p.cat==="Caches"?'<li><span>Couleurs</span>Toutes les couleurs disponibles</li><li><span>Modèles</span>Tous les modèles</li>':(col.length?'<li><span>Couleurs</span>'+col.map(esc).join(", ")+'</li>':''))+'<li><span>Livraison</span>4D</li></ul>'+
+    '<button class="btn red md pvadd" data-a="'+esc(p.id)+'"'+(p.price==null?' disabled':'')+'>Ajouter au panier</button></div></div>';
+  document.title=p.name+" - Houri Phone";
+  window.scrollTo(0,0);
+}
+function showList(){
+  $("pv").hidden=true;$("list").hidden=false;document.title="Houri Phone";
+  if(state.y!=null){window.scrollTo(0,state.y);state.y=null}
+}
+function route(){
+  var m=/^#p-(.+)$/.exec(location.hash),p=m&&find(m[1]);
+  if(p)showProduct(p);else showList();
+}
+window.addEventListener("hashchange",route);
+document.addEventListener("click",function(e){
+  var t=e.target;
+  if(t.closest("#ddb")){state.open=!state.open;renderCats();$("ddb").focus();return}
+  if(state.open&&!t.closest(".ddm")){state.open=false;renderCats()}
+  var sl=t.closest("[data-s]");
+  if(sl){var ph=sl.closest(".ph"),pp=find(ph.dataset.pid),n=pp.images.length,i=(+ph.dataset.i+(+sl.dataset.s)+n)%n;ph.dataset.i=i;ph.querySelector("img").src=pp.images[i];var lb=ph.querySelector(".lab");if(lb&&pp.colors[i])lb.textContent=pp.colors[i];[].forEach.call(ph.querySelectorAll(".dots i"),function(d,k){d.className=k===i?"on":""});return}
+  if(t.closest("[data-close]")){closeLayer();return}
+  var c=t.closest("[data-c]");if(c){state.cat=c.dataset.c;state.open=false;state.y=null;renderCats();renderGrid();if(location.hash)location.hash="";else window.scrollTo(0,0);return}
+  var d=t.closest("[data-d]");if(d){state.y=window.scrollY;location.hash="p-"+d.dataset.d;return}
+  if(t.closest("#pvback")){location.hash="";return}
+  var a=t.closest("[data-a]");if(a){askAdd(find(a.dataset.a));return}
+  if(t.closest("#openCart")){cartView();return}
+  var m=t.closest("[data-m]");if(m){var l=state.cart[+m.dataset.m];l.qty--;if(l.qty<1)state.cart.splice(+m.dataset.m,1);updateCount();cartView();return}
+  var pl=t.closest("[data-pl]");if(pl){state.cart[+pl.dataset.pl].qty++;updateCount();cartView();return}
+  var r=t.closest("[data-rm]");if(r){state.cart.splice(+r.dataset.rm,1);updateCount();cartView();return}
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeLayer();if(state.open){state.open=false;renderCats();var d=$("ddb");if(d)d.focus()}}});
+renderCats();renderGrid();route();
+</script>
+</body>
+</html>
